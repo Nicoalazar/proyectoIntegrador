@@ -1,7 +1,47 @@
+import { useMemo, useRef, useState } from 'react'
 import { formatCurrency } from '../utils/formatters.js'
 
 function CheckoutPage({ cartItems, onClearCart, navigate }) {
-  const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
+  const [showConfirmation, setShowConfirmation] = useState(false)
+  const [pendingOrder, setPendingOrder] = useState(null)
+  const formRef = useRef(null)
+
+  const total = useMemo(
+    () => cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0),
+    [cartItems],
+  )
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+
+    const formData = new FormData(event.currentTarget)
+    const orderData = {
+      name: formData.get('name')?.trim(),
+      address: formData.get('address')?.trim(),
+      email: formData.get('email')?.trim(),
+      paymentMethod: formData.get('paymentMethod'),
+    }
+
+    setPendingOrder(orderData)
+    setShowConfirmation(true)
+  }
+
+  const handleCloseConfirmation = () => {
+    setShowConfirmation(false)
+  }
+
+  const handleConfirmPurchase = () => {
+    setShowConfirmation(false)
+
+    navigate('/')
+
+    setTimeout(() => {
+      onClearCart()
+      if (formRef.current) {
+        formRef.current.reset()
+      }
+    }, 0)
+  }
 
   return (
     <div className="page checkout">
@@ -31,28 +71,22 @@ function CheckoutPage({ cartItems, onClearCart, navigate }) {
       </section>
       <section className="checkout__form">
         <h3>Datos de envío</h3>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault()
-            onClearCart()
-            navigate('/')
-          }}
-        >
+        <form ref={formRef} onSubmit={handleSubmit}>
           <label>
             Nombre completo
-            <input type="text" required />
+            <input name="name" type="text" required />
           </label>
           <label>
             Dirección
-            <input type="text" required />
+            <input name="address" type="text" required />
           </label>
           <label>
             Correo electrónico
-            <input type="email" required />
+            <input name="email" type="email" required />
           </label>
           <label>
             Método de pago
-            <select required>
+            <select name="paymentMethod" required>
               <option value="">Selecciona una opción</option>
               <option value="card">Tarjeta de crédito</option>
               <option value="transfer">Transferencia</option>
@@ -64,6 +98,26 @@ function CheckoutPage({ cartItems, onClearCart, navigate }) {
           </button>
         </form>
       </section>
+      {showConfirmation && pendingOrder && (
+        <div className="modal" role="dialog" aria-modal="true" aria-labelledby="checkout-confirmation-title">
+          <div className="modal__content">
+            <h4 id="checkout-confirmation-title">¿Deseas finalizar tu compra?</h4>
+            <p>
+              {pendingOrder.name ? `Hola ${pendingOrder.name}, ` : ''}
+              tu pedido por un total de {formatCurrency(total)} será enviado a {pendingOrder.address}.
+            </p>
+            <p>Confirma para completar el proceso o cancela si deseas revisar tus datos.</p>
+            <div className="modal__actions">
+              <button type="button" className="button button--secondary" onClick={handleCloseConfirmation}>
+                Revisar datos
+              </button>
+              <button type="button" className="button" onClick={handleConfirmPurchase}>
+                Confirmar compra
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
