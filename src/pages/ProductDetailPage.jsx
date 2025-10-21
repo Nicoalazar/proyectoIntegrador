@@ -1,11 +1,8 @@
-import { useMemo } from 'react'
 import { formatCurrency } from '../utils/formatters.js'
 
+// Muestra la información completa de un producto.
 function ProductDetailPage({ products = [], productId, onAddToCart, loading, error, navigate }) {
-  const product = useMemo(
-    () => products.find((item) => String(item.id) === String(productId)),
-    [products, productId],
-  )
+  const product = products.find((item) => String(item.id) === String(productId))
 
   if (loading && !product) {
     return (

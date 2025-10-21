@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 
+// Este componente protege rutas y redirige cuando no hay permisos básicos.
 function ProtectedRoute({ isAllowed, redirectTo, navigate, children }) {
   useEffect(() => {
     if (!isAllowed) {

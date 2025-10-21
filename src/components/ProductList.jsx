@@ -1,5 +1,6 @@
 import { formatCurrency } from '../utils/formatters.js'
 
+// Muestra tarjetas simples de productos y botones para acciones rápidas.
 function ProductList({ products = [], onAddToCart, loading = false, error = null, navigate }) {
   if (loading) {
     return (

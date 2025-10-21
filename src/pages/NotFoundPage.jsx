@@ -1,3 +1,4 @@
+// Pantalla sencilla para rutas no encontradas.
 function NotFoundPage({ navigate }) {
   return (
     <div className="page">

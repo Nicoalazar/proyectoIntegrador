@@ -1,7 +1,10 @@
 import { formatCurrency } from '../utils/formatters.js'
 
+// Este componente muestra los productos del carrito y permite editarlos.
 function Cart({ items = [], onRemove, onUpdateQuantity, compact = false, navigate }) {
+  // Calculo cuántos productos hay en total.
   const totalItems = items.reduce((acc, item) => acc + item.quantity, 0)
+  // También sumo el precio total del carrito.
   const totalPrice = items.reduce((acc, item) => acc + item.price * item.quantity, 0)
 
   return (

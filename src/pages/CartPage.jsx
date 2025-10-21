@@ -1,5 +1,6 @@
 import Cart from '../components/Cart.jsx'
 
+// Pantalla que resume los productos en el carrito.
 function CartPage({ cartItems, onRemoveFromCart, onUpdateQuantity, navigate }) {
   return (
     <div className="page">

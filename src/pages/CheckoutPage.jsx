@@ -1,18 +1,17 @@
-import { useMemo, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { formatCurrency } from '../utils/formatters.js'
 
+// En esta pantalla capturo los datos del usuario y confirmo la compra.
 function CheckoutPage({ cartItems, onClearCart, navigate }) {
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [confirmation, setConfirmation] = useState(false)
-
   const [pendingOrder, setPendingOrder] = useState(null)
   const formRef = useRef(null)
 
-  const total = useMemo(
-    () => cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0),
-    [cartItems],
-  )
+  // Calculo el total de la compra en cada render. Es más simple de entender.
+  const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
 
+  // Guardo los datos del formulario y muestro el modal.
   const handleSubmit = (event) => {
     event.preventDefault()
 
@@ -28,26 +27,19 @@ function CheckoutPage({ cartItems, onClearCart, navigate }) {
     setShowConfirmation(true)
   }
 
+  // Cierro el modal sin confirmar.
   const handleCloseConfirmation = () => {
     setShowConfirmation(false)
   }
 
+  // Confirmo la compra y muestro un mensaje final.
   const handleConfirmPurchase = () => {
     setShowConfirmation(false)
     setConfirmation(true)
-
-    // navigate('/')
-
-    // setTimeout(() => {
-    //   onClearCart()
-    //   if (formRef.current) {
-    //     formRef.current.reset()
-    //   }
-    // }, 0)
   }
 
+  // Cuando el usuario vuelve al inicio limpio todo.
   const handleGoToHome = () => {
-
     setConfirmation(false)
     navigate('/')
 
@@ -141,7 +133,7 @@ function CheckoutPage({ cartItems, onClearCart, navigate }) {
             <p>Gracias por tu compra!</p>
             <div className="modal__actions">
               <button type="button" onClick={handleGoToHome} className="state__action">
-              Ir al inicio
+                Ir al inicio
               </button>
             </div>
           </div>
