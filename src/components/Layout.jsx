@@ -1,5 +1,6 @@
 import Cart from './Cart.jsx'
 
+// Este layout envuelve todo el sitio con cabecera, contenido y carrito lateral.
 function Layout({ children, cartItems = [], navigate, onRemoveFromCart, onUpdateQuantity, currentPath }) {
   return (
     <div className="layout">

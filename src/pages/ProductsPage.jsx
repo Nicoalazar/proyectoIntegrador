@@ -1,5 +1,6 @@
 import ProductList from '../components/ProductList.jsx'
 
+// Listado general de productos.
 function ProductsPage({ products = [], onAddToCart, loading, error, navigate }) {
   return (
     <div className="page">
