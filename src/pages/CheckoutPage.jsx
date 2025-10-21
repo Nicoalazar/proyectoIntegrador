@@ -3,6 +3,8 @@ import { formatCurrency } from '../utils/formatters.js'
 
 function CheckoutPage({ cartItems, onClearCart, navigate }) {
   const [showConfirmation, setShowConfirmation] = useState(false)
+  const [confirmation, setConfirmation] = useState(false)
+
   const [pendingOrder, setPendingOrder] = useState(null)
   const formRef = useRef(null)
 
@@ -32,7 +34,21 @@ function CheckoutPage({ cartItems, onClearCart, navigate }) {
 
   const handleConfirmPurchase = () => {
     setShowConfirmation(false)
+    setConfirmation(true)
 
+    // navigate('/')
+
+    // setTimeout(() => {
+    //   onClearCart()
+    //   if (formRef.current) {
+    //     formRef.current.reset()
+    //   }
+    // }, 0)
+  }
+
+  const handleGoToHome = () => {
+
+    setConfirmation(false)
     navigate('/')
 
     setTimeout(() => {
@@ -113,6 +129,19 @@ function CheckoutPage({ cartItems, onClearCart, navigate }) {
               </button>
               <button type="button" className="button" onClick={handleConfirmPurchase}>
                 Confirmar compra
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {confirmation && (
+        <div className="modal" role="dialog" aria-modal="true" aria-labelledby="checkout-confirmation-title">
+          <div className="modal__content">
+            <h4 id="checkout-confirmation-title">Compra exitosa</h4>
+            <p>Gracias por tu compra!</p>
+            <div className="modal__actions">
+              <button type="button" onClick={handleGoToHome} className="state__action">
+              Ir al inicio
               </button>
             </div>
           </div>

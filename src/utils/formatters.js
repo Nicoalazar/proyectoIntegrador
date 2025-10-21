@@ -1,7 +1,9 @@
+const dolarPrice = 1450;
+
 export function formatCurrency(value) {
-  return new Intl.NumberFormat('es-MX', {
+  return new Intl.NumberFormat('es-AR', {
     style: 'currency',
-    currency: 'MXN',
+    currency: 'ARS',
     minimumFractionDigits: 2,
-  }).format(value)
+  }).format(value*dolarPrice);
 }

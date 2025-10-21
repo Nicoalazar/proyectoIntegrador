@@ -9,7 +9,7 @@ import CheckoutPage from './pages/CheckoutPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 
-const API_URL = 'https://fakestoreapi.com/products'
+const API_URL = 'https://fakestoreapi.com/products' //https://fakestoreapiserver.reactbd.org/api/products
 const FALLBACK_PRODUCTS = [
   {
     id: 101,
