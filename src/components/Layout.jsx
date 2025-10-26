@@ -1,5 +1,6 @@
 import Cart from './Cart.jsx'
 
+// Este layout envuelve todo el sitio con cabecera, contenido y carrito lateral.
 function Layout({ children, cartItems = [], navigate, onRemoveFromCart, onUpdateQuantity, currentPath }) {
   return (
     <div className="layout">
@@ -44,15 +45,17 @@ function Layout({ children, cartItems = [], navigate, onRemoveFromCart, onUpdate
         <section className="layout__content" aria-live="polite">
           {children}
         </section>
-        <aside className="layout__sidebar" aria-label="Carrito">
-          <Cart
-            items={cartItems}
-            onRemove={onRemoveFromCart}
-            onUpdateQuantity={onUpdateQuantity}
-            navigate={navigate}
-            compact
-          />
-        </aside>
+        {cartItems.length > 0 && (
+          <aside className="layout__sidebar" aria-label="Carrito">
+            <Cart
+              items={cartItems}
+              onRemove={onRemoveFromCart}
+              onUpdateQuantity={onUpdateQuantity}
+              navigate={navigate}
+              compact
+            />
+          </aside>
+        )}
       </main>
 
       <footer className="layout__footer">

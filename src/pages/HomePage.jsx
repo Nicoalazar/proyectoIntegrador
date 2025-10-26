@@ -1,5 +1,6 @@
 import ProductList from '../components/ProductList.jsx'
 
+// Página inicial con productos destacados.
 function HomePage({ products = [], onAddToCart, loading, error, navigate }) {
   const featuredProducts = products.slice(0, 4)
 
